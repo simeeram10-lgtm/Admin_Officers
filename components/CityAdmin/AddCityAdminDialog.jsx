@@ -69,7 +69,7 @@ export default function AddCityAdminDialog({ isOpen, onClose, onAdd }) {
           </div>
         </DialogHeader>
         {/* BODY */}
-        <div className="max-h-[60vh] overflow-y-auto px-6 py-5 space-y-6">
+        <div className="max-h-[60vh] overflow-y-auto px-6 py-5 space-y-6" style={{ scrollPaddingTop: '120px' }}>
           <Section title="Basic Information">
             <Grid>
               <StyledInput label="Full Name" value={formData.fullName} onChange={(v) => setFormData({ ...formData, fullName: v })} />
