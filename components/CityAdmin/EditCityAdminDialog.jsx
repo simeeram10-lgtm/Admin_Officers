@@ -1,0 +1,120 @@
+// EditCityAdminDialog.jsx
+// Dialog for editing a City Admin row
+
+import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription,
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { X, Shield } from "lucide-react";
+
+export default function EditCityAdminDialog({ isOpen, cityAdmin, onClose, onUpdate }) {
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (cityAdmin) setFormData(cityAdmin);
+  }, [cityAdmin]);
+
+  const handleSubmit = () => {
+    onUpdate(formData);
+    onClose();
+  };
+
+  if (!cityAdmin) return null;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl p-0 rounded-3xl h-[80vh] flex flex-col overflow-hidden border border-specialBlue-500 bg-gradient-to-b from-white to-specialBlue-100 dark:from-dark-400 dark:to-dark-700 shadow-[0_40px_120px_rgba(0,0,0,0.18)] [&>button]:hidden">
+        <DialogDescription>
+          Edit the details for this city admin.
+        </DialogDescription>
+        {/* TOP BAR */}
+        <div className="h-1.5 bg-gradient-to-r from-specialGreen-500 via-specialBlue-500 to-specialRed-500" />
+        {/* HEADER */}
+        <DialogHeader className="px-6 pt-5 pb-4 border-b border-specialBlue-500">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-specialBlue-500 to-specialGreen-500 shadow-lg">
+                <Shield className="text-white w-5 h-5" />
+              </div>
+              <div>
+                <DialogTitle className="text-lg font-bold text-gray-900 dark:text-white">
+                  Edit City Admin
+                </DialogTitle>
+                <p className="text-xs text-specialBlue-500 dark:text-specialGreen-500">
+                  Update city admin information
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl hover:bg-specialBlue-100 dark:hover:bg-dark-600 transition"
+            >
+              <X className="w-5 h-5 text-specialBlue-500" />
+            </button>
+          </div>
+        </DialogHeader>
+        {/* BODY */}
+        <div className="max-h-[60vh] overflow-y-auto px-6 py-5 space-y-6">
+          <Section title="Basic Information">
+            <Grid>
+              <StyledInput label="Full Name" value={formData.fullName} onChange={(v) => setFormData({ ...formData, fullName: v })} />
+              <StyledInput label="Email" value={formData.email} onChange={(v) => setFormData({ ...formData, email: v })} />
+              <StyledInput label="Phone" value={formData.phone} onChange={(v) => setFormData({ ...formData, phone: v })} />
+              <StyledInput type="date" label="DOB" value={formData.dob} onChange={(v) => setFormData({ ...formData, dob: v })} />
+            </Grid>
+          </Section>
+          <Section title="Location Details">
+            <Grid>
+              <StyledInput label="State" value={formData.state} onChange={(v) => setFormData({ ...formData, state: v })} />
+              <StyledInput label="City" value={formData.city} onChange={(v) => setFormData({ ...formData, city: v })} />
+              <StyledInput label="District" value={formData.district} onChange={(v) => setFormData({ ...formData, district: v })} />
+            </Grid>
+          </Section>
+        </div>
+        {/* FOOTER */}
+        <DialogFooter className="px-6 py-4 border-t border-specialBlue-500 flex justify-end gap-3 backdrop-blur bg-white/80 dark:bg-dark-400/80">
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} className="bg-specialBlue-500 hover:bg-specialBlue-600 text-white font-semibold px-4 py-2 rounded-lg shadow">
+            Save Changes
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function Section({ title, children }) {
+  return (
+    <div className="rounded-2xl p-5 bg-gradient-to-b from-white to-specialBlue-50 dark:from-dark-400/50 dark:to-dark-700/40 border border-specialBlue-500 shadow-sm">
+      <h3 className="text-sm font-semibold mb-4 text-specialBlue-500 dark:text-specialGreen-500">{title}</h3>
+      {children}
+    </div>
+  );
+}
+
+function Grid({ children }) {
+  return <div className="grid sm:grid-cols-2 gap-4">{children}</div>;
+}
+
+function StyledInput({ label, value, onChange, type = "text" }) {
+  return (
+    <div>
+      <label className="text-xs mb-1 block text-specialBlue-500 dark:text-specialGreen-500">{label}</label>
+      <Input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="bg-white dark:bg-dark-600 border-specialBlue-200 dark:border-specialGreen-700 focus-visible:ring-2 focus-visible:ring-specialGreen-500 dark:focus-visible:ring-specialBlue-500"
+      />
+    </div>
+  );
+}
