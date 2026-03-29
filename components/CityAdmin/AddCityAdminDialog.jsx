@@ -34,33 +34,37 @@ export default function AddCityAdminDialog({ isOpen, onClose, onAdd }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl p-0 rounded-3xl h-[80vh] flex flex-col overflow-hidden border border-specialBlue-500 bg-gradient-to-b from-white to-specialBlue-100 dark:from-dark-400 dark:to-dark-700 shadow-[0_40px_120px_rgba(0,0,0,0.18)] [&>button]:hidden">
+      <DialogContent className="max-w-3xl p-0 rounded-3xl h-[90vh] flex flex-col overflow-hidden border border-gray-200 dark:border-cyan-900 bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 shadow-[0_40px_120px_rgba(0,0,0,0.25)] [&>button]:hidden">
         <DialogDescription>
           Fill in the details to add a new city admin.
         </DialogDescription>
-        {/* TOP BAR */}
-        <div className="h-1.5 bg-gradient-to-r from-specialGreen-500 via-specialBlue-500 to-specialRed-500" />
+        {/* TOP GLOW BAR */}
+        <div className="h-1.5 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
+
         {/* HEADER */}
-        <DialogHeader className="px-6 pt-5 pb-4 border-b border-specialBlue-500">
+        <DialogHeader className="px-6 pt-5 pb-4 border-b border-gray-200 dark:border-cyan-900">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-specialGreen-500 to-specialBlue-500 shadow-lg">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 shadow-lg">
                 <UserPlus className="text-white w-5 h-5" />
               </div>
+
               <div>
                 <DialogTitle className="text-lg font-bold text-gray-900 dark:text-white">
                   Add City Admin
                 </DialogTitle>
-                <p className="text-xs text-specialGreen-500 dark:text-specialBlue-500">
+                <p className="text-xs text-teal-600 dark:text-cyan-300">
                   Pre-provision account for CityCare
                 </p>
               </div>
             </div>
+
+            {/* CUSTOM CLOSE ONLY */}
             <button
               onClick={onClose}
-              className="p-2 rounded-xl hover:bg-specialBlue-100 dark:hover:bg-dark-600 transition"
+              className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition"
             >
-              <X className="w-5 h-5 text-specialBlue-500" />
+              <X className="w-5 h-5 text-cyan-600" />
             </button>
           </div>
         </DialogHeader>
@@ -83,11 +87,11 @@ export default function AddCityAdminDialog({ isOpen, onClose, onAdd }) {
           </Section>
         </div>
         {/* FOOTER */}
-        <DialogFooter className="px-6 py-4 border-t border-specialBlue-500 flex justify-end gap-3 backdrop-blur bg-white/80 dark:bg-dark-400/80">
+        <DialogFooter className="px-6 py-4 border-t border-gray-200 dark:border-cyan-900 flex justify-end gap-3 backdrop-blur bg-white/80 dark:bg-slate-900/80">
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} className="bg-specialGreen-500 hover:bg-specialGreen-600 text-white font-semibold px-4 py-2 rounded-lg shadow">
+          <Button onClick={handleSubmit} className="bg-teal-500 hover:bg-cyan-600 text-white font-semibold px-4 py-2 rounded-lg shadow">
             Add City Admin
           </Button>
         </DialogFooter>
