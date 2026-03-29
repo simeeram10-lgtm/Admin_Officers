@@ -85,7 +85,8 @@ export default function CityAdminProvisioningPage() {
             Bulk onboard and manage city admin accounts efficiently
           </p>
         </div>
-        <div className="flex items-center gap-3 flex-wrap justify-end" style={{ position: 'absolute', top: 24, right: 32 }}>
+        <div className="flex items-center gap-3 flex-wrap justify-end mt-2 md:mt-0">
+          <ModeToggle />
           <button
             onClick={() => setShowAdd(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
@@ -93,7 +94,6 @@ export default function CityAdminProvisioningPage() {
             <Plus className="w-4 h-4" />
             Add Admin
           </button>
-          <ModeToggle />
         </div>
       </div>
 
