@@ -51,15 +51,9 @@ export default function CityAdminPage() {
     toast.success('City Admin added');
   };
 
-  // Edit row
-  const handleEdit = (idx) => {
-    setEditIdx(idx);
-  };
-
-  // Update row
-  const handleUpdate = (row) => {
-    setAdmins(admins.map((d, i) => (i === editIdx ? { ...row, password: generatePassword(row.fullName, row.dob) } : d)));
-    setEditIdx(null);
+  // Inline edit row
+  const handleInlineEdit = (idx, values) => {
+    setAdmins(admins.map((d, i) => (i === idx ? { ...d, ...values, password: generatePassword(values.fullName, values.dob) } : d)));
     toast.success('City Admin updated');
   };
 
@@ -105,7 +99,7 @@ export default function CityAdminPage() {
         <div className="flex items-center gap-3 flex-wrap justify-end mt-2 md:mt-0">
           <ModeToggle />
           <button
-            onClick={() => setShowAdd(true)}
+            onClick={() => setIsAddDialogOpen(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
           >
             <Plus className="w-4 h-4" />
@@ -148,7 +142,7 @@ export default function CityAdminPage() {
           </div>
           <CityAdminTable
             data={admins}
-            onEdit={handleEdit}
+            onEdit={handleInlineEdit}
             onDelete={handleDelete}
             onAdd={() => setIsAddDialogOpen(true)}
             loading={loading}

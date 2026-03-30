@@ -1,7 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
+import { Edit3, Trash2, Save, X as CancelIcon } from "lucide-react";
 
 export default function CityAdminTable({ data, onEdit, onDelete, onAdd, loading }) {
+    const [editingIdx, setEditingIdx] = useState(null);
+    const [editValues, setEditValues] = useState({});
+
   if (!data || data.length === 0) {
     return (
       <div className="h-72 grid place-items-center rounded-3xl border-2 border-dashed border-teal-400/40 dark:border-cyan-700/40 bg-gradient-to-br from-teal-100/40 to-cyan-100/40 dark:from-slate-900 dark:to-slate-950 mt-6">
@@ -34,36 +39,102 @@ export default function CityAdminTable({ data, onEdit, onDelete, onAdd, loading 
             </tr>
           </thead>
           <tbody>
-            {data.map((row, idx) => (
-              <tr
-                key={idx}
-                className="border-b border-teal-100 dark:border-cyan-900 hover:bg-teal-50 dark:hover:bg-cyan-950/40 transition"
-              >
-                <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{row.fullName}</td>
-                <td className="px-4 py-3 text-gray-700 dark:text-gray-300">{row.email}</td>
-                <td className="px-4 py-3">{row.phone}</td>
-                <td className="px-4 py-3">{row.dob}</td>
-                <td className="px-4 py-3">{row.state}</td>
-                <td className="px-4 py-3">{row.city}</td>
-                <td className="px-4 py-3">{row.district}</td>
-                <td className="px-4 py-3 text-center font-semibold">
-                  <span className="px-2 py-1 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-200">
-                    city_admin
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex justify-center gap-2">
-                    <Button size="sm" variant="outline" onClick={() => onEdit(idx)} className="border-cyan-500 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-500 hover:text-white">Edit</Button>
-                    <Button size="sm" variant="outline" onClick={() => onDelete(idx)} className="border-red-500 text-red-600 hover:bg-red-500 hover:text-white">Delete</Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {data.map((row, idx) => {
+              const isEditing = editingIdx === idx;
+              return (
+                <tr
+                  key={idx}
+                  className="border-b border-teal-100 dark:border-cyan-900 hover:bg-teal-50 dark:hover:bg-cyan-950/40 transition"
+                >
+                  {isEditing ? (
+                    <>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.fullName || ""} onChange={e => setEditValues(v => ({ ...v, fullName: e.target.value }))} /></td>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.email || ""} onChange={e => setEditValues(v => ({ ...v, email: e.target.value }))} /></td>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.phone || ""} onChange={e => setEditValues(v => ({ ...v, phone: e.target.value }))} /></td>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.dob || ""} onChange={e => setEditValues(v => ({ ...v, dob: e.target.value }))} /></td>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.state || ""} onChange={e => setEditValues(v => ({ ...v, state: e.target.value }))} /></td>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.city || ""} onChange={e => setEditValues(v => ({ ...v, city: e.target.value }))} /></td>
+                      <td className="px-4 py-3"><input className="input input-sm w-full" value={editValues.district || ""} onChange={e => setEditValues(v => ({ ...v, district: e.target.value }))} /></td>
+                      <td className="px-4 py-3 text-center font-semibold">
+                        <span className="px-2 py-1 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-200">
+                          city_admin
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex justify-center gap-2">
+                          <button
+                            onClick={() => {
+                              setEditingIdx(null);
+                              if (
+                                editValues.fullName &&
+                                editValues.email
+                              ) {
+                                // Save
+                                onEdit(idx, editValues);
+                              }
+                            }}
+                            className="p-2 rounded-lg bg-green-100 hover:bg-green-200 dark:bg-green-900/40 dark:hover:bg-green-800/60 transition"
+                            title="Save"
+                          >
+                            <Save className="w-4 h-4 text-green-700 dark:text-green-300" />
+                          </button>
+                          <button
+                            onClick={() => setEditingIdx(null)}
+                            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-900/40 dark:hover:bg-gray-800/60 transition"
+                            title="Cancel"
+                          >
+                            <CancelIcon className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                          </button>
+                        </div>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{row.fullName}</td>
+                      <td className="px-4 py-3 text-gray-700 dark:text-gray-300">{row.email}</td>
+                      <td className="px-4 py-3">{row.phone}</td>
+                      <td className="px-4 py-3">{row.dob}</td>
+                      <td className="px-4 py-3">{row.state}</td>
+                      <td className="px-4 py-3">{row.city}</td>
+                      <td className="px-4 py-3">{row.district}</td>
+                      <td className="px-4 py-3 text-center font-semibold">
+                        <span className="px-2 py-1 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-200">
+                          city_admin
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex justify-center gap-2">
+                          <button
+                            onClick={() => {
+                              setEditingIdx(idx);
+                              setEditValues(row);
+                            }}
+                            className="p-2 rounded-lg bg-teal-100 hover:bg-teal-200 dark:bg-teal-900/40 dark:hover:bg-teal-800/60 transition"
+                            title="Edit"
+                            disabled={editingIdx !== null}
+                          >
+                            <Edit3 className="w-4 h-4 text-teal-700 dark:text-teal-300" />
+                          </button>
+                          <button
+                            onClick={() => onDelete(idx)}
+                            className="p-2 rounded-lg bg-red-100 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-800/60 transition"
+                            title="Delete"
+                            disabled={editingIdx !== null}
+                          >
+                            <Trash2 className="w-4 h-4 text-red-600" />
+                          </button>
+                        </div>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
       <div className="flex justify-end mt-4 p-4">
-        <Button onClick={onAdd} className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold px-4 py-2 rounded-lg shadow">Add Row</Button>
+        <Button onClick={onAdd} className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold px-4 py-2 rounded-lg shadow" disabled={editingIdx !== null}>Add Row</Button>
       </div>
     </div>
   );
