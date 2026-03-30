@@ -1,6 +1,9 @@
+
 import React from "react";
 import { Button } from "../ui/button";
 import { Edit3, Trash2 } from "lucide-react";
+
+export default function CityAdminTable({ data, onEdit, onDelete, onAdd, loading }) {
 
 
 
@@ -75,13 +78,6 @@ import { Edit3, Trash2 } from "lucide-react";
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="flex justify-end mt-4 p-4">
-        <Button onClick={onAdd} className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold px-4 py-2 rounded-lg shadow">Add Row</Button>
-      </div>
-    </div>
-  );
-// (Unreachable duplicate code removed)
       </div>
       <div className="flex justify-end mt-4 p-4">
         <Button onClick={onAdd} className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold px-4 py-2 rounded-lg shadow">Add Row</Button>
