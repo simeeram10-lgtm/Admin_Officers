@@ -106,7 +106,7 @@ function Section({ title, children }) {
     <div
       className="rounded-2xl p-5 bg-gradient-to-b from-white to-gray-50 dark:from-slate-800/50 dark:to-slate-900/40 border border-gray-200 dark:border-cyan-900 shadow-sm"
     >
-      <h3 className="text-sm font-semibold mb-4 text-gray-700 dark:text-cyan-300">{title}</h3>
+      <h3 className="text-sm font-semibold mb-4 text-gray-700 dark:text-cyan-300 tracking-wide uppercase">{title}</h3>
       {children}
     </div>
   );
