@@ -13,10 +13,10 @@ import { generatePassword } from '@/lib/generatePassword';
 import { toast } from 'sonner';
 import { ModeToggle } from '@/components/ModeToggle';
 
-export default function CityAdminProvisioningPage() {
+export default function CityAdminPage() {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showAdd, setShowAdd] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editIdx, setEditIdx] = useState(null);
 
   // Handle CSV upload and parsing
@@ -46,13 +46,17 @@ export default function CityAdminProvisioningPage() {
   };
 
   // Add new row
-  const handleAdd = (row) => {
+  const handleAddAdmin = (row) => {
     setAdmins([...admins, { ...row, password: generatePassword(row.fullName, row.dob) }]);
     toast.success('City Admin added');
   };
 
   // Edit row
-  const handleEdit = (idx) => setEditIdx(idx);
+  const handleEdit = (idx) => {
+    setEditIdx(idx);
+  };
+
+  // Update row
   const handleUpdate = (row) => {
     setAdmins(admins.map((d, i) => (i === editIdx ? { ...row, password: generatePassword(row.fullName, row.dob) } : d)));
     setEditIdx(null);
@@ -72,6 +76,19 @@ export default function CityAdminProvisioningPage() {
       toast.success('All city admins deleted');
     }
   };
+
+  const handleSubmitToDatabase = () => {
+    if (!admins.length) {
+      toast.error("No city admins to submit!");
+      return;
+    }
+    // You can add your transform logic here if needed
+    console.log("=== CITYCARE DATABASE SUBMISSION ===");
+    console.log(admins);
+    console.log("====================================");
+    toast.success(`Submitted ${admins.length} city admins`);
+  };
+
 
   return (
     <div className="w-full h-full min-h-screen bg-white dark:bg-slate-950 px-4 sm:px-6 py-6">
@@ -133,14 +150,14 @@ export default function CityAdminProvisioningPage() {
             data={admins}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            onAdd={() => setShowAdd(true)}
+            onAdd={() => setIsAddDialogOpen(true)}
             loading={loading}
           />
         </div>
       </div>
 
       {/* DIALOGS */}
-      <AddCityAdminDialog isOpen={showAdd} onClose={() => setShowAdd(false)} onAdd={handleAdd} />
+      <AddCityAdminDialog isOpen={isAddDialogOpen} onClose={() => setIsAddDialogOpen(false)} onAdd={handleAddAdmin} />
       <EditCityAdminDialog
         isOpen={editIdx !== null}
         cityAdmin={editIdx !== null ? admins[editIdx] : null}
