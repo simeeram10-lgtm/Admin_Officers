@@ -101,9 +101,12 @@ export default function AddCityAdminDialog({ isOpen, onClose, onAdd }) {
 }
 
 function Section({ title, children }) {
+  // Match SystemAdmin section style
   return (
-    <div className="rounded-2xl p-5 bg-gradient-to-b from-white to-specialBlue-50 dark:from-dark-400/50 dark:to-dark-700/40 border border-specialBlue-500 shadow-sm">
-      <h3 className="text-sm font-semibold mb-4 text-specialBlue-500 dark:text-specialGreen-500">{title}</h3>
+    <div
+      className="rounded-2xl p-5 bg-gradient-to-b from-white to-gray-50 dark:from-slate-800/50 dark:to-slate-900/40 border border-gray-200 dark:border-cyan-900 shadow-sm"
+    >
+      <h3 className="text-sm font-semibold mb-4 text-gray-700 dark:text-cyan-300">{title}</h3>
       {children}
     </div>
   );
