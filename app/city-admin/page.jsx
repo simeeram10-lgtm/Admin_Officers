@@ -17,6 +17,8 @@ export default function CityAdminPage() {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingAdminIdx, setEditingAdminIdx] = useState(null);
 
   // Handle CSV upload and parsing
   const handleFileParsed = async (file) => {
@@ -50,9 +52,18 @@ export default function CityAdminPage() {
     toast.success('City Admin added');
   };
 
-  // Inline edit row
-  const handleInlineEdit = (idx, values) => {
-    setAdmins(admins.map((d, i) => (i === idx ? { ...d, ...values, password: generatePassword(values.fullName, values.dob) } : d)));
+
+  // Open edit dialog for row
+  const handleEdit = (idx) => {
+    setEditingAdminIdx(idx);
+    setIsEditDialogOpen(true);
+  };
+
+  // Update admin after dialog save
+  const handleUpdateAdmin = (updatedAdmin) => {
+    setAdmins((prev) => prev.map((d, i) => i === editingAdminIdx ? { ...updatedAdmin, password: generatePassword(updatedAdmin.fullName, updatedAdmin.dob) } : d));
+    setIsEditDialogOpen(false);
+    setEditingAdminIdx(null);
     toast.success('City Admin updated');
   };
 
@@ -141,7 +152,7 @@ export default function CityAdminPage() {
           </div>
           <CityAdminTable
             data={admins}
-            onEdit={handleInlineEdit}
+            onEdit={handleEdit}
             onDelete={handleDelete}
             onAdd={() => setIsAddDialogOpen(true)}
             loading={loading}
@@ -151,6 +162,12 @@ export default function CityAdminPage() {
 
       {/* DIALOGS */}
       <AddCityAdminDialog isOpen={isAddDialogOpen} onClose={() => setIsAddDialogOpen(false)} onAdd={handleAddAdmin} />
+      <EditCityAdminDialog
+        isOpen={isEditDialogOpen}
+        cityAdmin={editingAdminIdx !== null ? admins[editingAdminIdx] : null}
+        onClose={() => { setIsEditDialogOpen(false); setEditingAdminIdx(null); }}
+        onUpdate={handleUpdateAdmin}
+      />
     </div>
   );
 }
