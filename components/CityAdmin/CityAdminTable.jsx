@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "../ui/button";
-import { Edit3, Trash2 } from "lucide-react";
+import { Edit3, Trash2, Mail, Phone, MapPin, User, Calendar } from "lucide-react";
 
 export default function CityAdminTable({ data, onEdit, onDelete, onAdd, loading }) {
 
@@ -26,15 +26,20 @@ export default function CityAdminTable({ data, onEdit, onDelete, onAdd, loading 
       {/* MOBILE + TABLET (CARDS) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-5 mt-6">
         {data.map((row, idx) => (
-          <div key={idx} className="rounded-3xl border border-teal-400/30 dark:border-cyan-700/40 bg-white dark:bg-slate-900 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div
+            key={idx}
+            className="rounded-3xl border border-teal-400/30 dark:border-cyan-700/40 bg-white dark:bg-slate-900 shadow-lg hover:shadow-xl transition-all duration-300"
+          >
             <div className="p-5 space-y-4">
               {/* HEADER */}
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-bold text-lg text-teal-700 dark:text-teal-300 flex items-center gap-2">
+                    <User className="w-4 h-4" />
                     {row.fullName}
                   </h3>
                   <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                    <Mail className="w-3 h-3" />
                     {row.email}
                   </p>
                 </div>
@@ -45,30 +50,30 @@ export default function CityAdminTable({ data, onEdit, onDelete, onAdd, loading 
               {/* DETAILS */}
               <div className="grid grid-cols-2 gap-3 text-xs text-gray-700 dark:text-gray-300">
                 <p className="flex items-center gap-1">
-                  Phone: {row.phone}
+                  <Phone className="w-3 h-3" /> {row.phone}
                 </p>
                 <p className="flex items-center gap-1">
-                  DOB: {row.dob}
+                  <Calendar className="w-3 h-3" /> {row.dob}
                 </p>
                 <p className="flex items-center gap-1 col-span-2">
-                  {row.city}, {row.state}
+                  <MapPin className="w-3 h-3" /> {row.city}, {row.state}
                 </p>
                 <p className="flex items-center gap-1">
                   District: {row.district}
                 </p>
               </div>
               {/* ACTIONS */}
-              <div className="flex justify-center gap-2 mt-2">
+              <div className="flex justify-end gap-2 pt-2 border-t border-teal-200 dark:border-cyan-800">
                 <button
                   onClick={() => onEdit(idx)}
-                  className="p-2 rounded-lg bg-teal-100 hover:bg-teal-200 dark:bg-teal-900/40 dark:hover:bg-teal-800/60 transition"
+                  className="p-2 rounded-xl bg-teal-100 hover:bg-teal-200 dark:bg-teal-900/40 dark:hover:bg-teal-800/60 transition"
                   title="Edit"
                 >
                   <Edit3 className="w-4 h-4 text-teal-700 dark:text-teal-300" />
                 </button>
                 <button
                   onClick={() => onDelete(idx)}
-                  className="p-2 rounded-lg bg-red-100 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-800/60 transition"
+                  className="p-2 rounded-xl bg-red-100 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-800/60 transition"
                   title="Delete"
                 >
                   <Trash2 className="w-4 h-4 text-red-600" />
