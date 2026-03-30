@@ -17,7 +17,6 @@ export default function CityAdminPage() {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editIdx, setEditIdx] = useState(null);
 
   // Handle CSV upload and parsing
   const handleFileParsed = async (file) => {
@@ -152,12 +151,6 @@ export default function CityAdminPage() {
 
       {/* DIALOGS */}
       <AddCityAdminDialog isOpen={isAddDialogOpen} onClose={() => setIsAddDialogOpen(false)} onAdd={handleAddAdmin} />
-      <EditCityAdminDialog
-        isOpen={editIdx !== null}
-        cityAdmin={editIdx !== null ? admins[editIdx] : null}
-        onClose={() => setEditIdx(null)}
-        onUpdate={handleUpdate}
-      />
     </div>
   );
 }
