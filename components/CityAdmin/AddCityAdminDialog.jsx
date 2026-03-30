@@ -64,25 +64,25 @@ export default function AddCityAdminDialog({ isOpen, onClose, onAdd }) {
               onClick={onClose}
               className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition"
             >
-              <X className="w-5 h-5 text-cyan-600" />
+              <X className="w-5 h-5 text-gray-500" />
             </button>
           </div>
         </DialogHeader>
         {/* BODY */}
-        <div className="max-h-[60vh] overflow-y-auto px-6 py-5 space-y-6" style={{ scrollPaddingTop: '120px' }}>
+        <div className="max-h-[70vh] overflow-y-auto px-6 py-5 space-y-6">
           <Section title="Basic Information">
             <Grid>
-              <StyledInput label="Full Name" value={formData.fullName} onChange={(v) => setFormData({ ...formData, fullName: v })} />
-              <StyledInput label="Email" value={formData.email} onChange={(v) => setFormData({ ...formData, email: v })} />
-              <StyledInput label="Phone" value={formData.phone} onChange={(v) => setFormData({ ...formData, phone: v })} />
+              <StyledInput label="Full Name" placeholder="Sagnik Dey" value={formData.fullName} onChange={(v) => setFormData({ ...formData, fullName: v })} />
+              <StyledInput label="Email" placeholder="sagnik@citycare.in" value={formData.email} onChange={(v) => setFormData({ ...formData, email: v })} />
+              <StyledInput label="Phone" placeholder="9876543210" value={formData.phone} onChange={(v) => setFormData({ ...formData, phone: v })} />
               <StyledInput type="date" label="DOB" value={formData.dob} onChange={(v) => setFormData({ ...formData, dob: v })} />
             </Grid>
           </Section>
           <Section title="Location Details">
             <Grid>
-              <StyledInput label="State" value={formData.state} onChange={(v) => setFormData({ ...formData, state: v })} />
-              <StyledInput label="City" value={formData.city} onChange={(v) => setFormData({ ...formData, city: v })} />
-              <StyledInput label="District" value={formData.district} onChange={(v) => setFormData({ ...formData, district: v })} />
+              <StyledInput label="State" placeholder="West Bengal" value={formData.state} onChange={(v) => setFormData({ ...formData, state: v })} />
+              <StyledInput label="City" placeholder="Kolkata" value={formData.city} onChange={(v) => setFormData({ ...formData, city: v })} />
+              <StyledInput label="District" placeholder="Howrah" value={formData.district} onChange={(v) => setFormData({ ...formData, district: v })} />
             </Grid>
           </Section>
         </div>
@@ -91,7 +91,7 @@ export default function AddCityAdminDialog({ isOpen, onClose, onAdd }) {
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} className="bg-teal-500 hover:bg-cyan-600 text-white font-semibold px-4 py-2 rounded-lg shadow">
+          <Button onClick={handleSubmit} className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white hover:scale-[1.02] transition">
             Add City Admin
           </Button>
         </DialogFooter>
@@ -116,15 +116,23 @@ function Grid({ children }) {
   return <div className="grid sm:grid-cols-2 gap-4">{children}</div>;
 }
 
-function StyledInput({ label, value, onChange, type = "text" }) {
+function StyledInput({ label, value, onChange, type = "text", placeholder }) {
   return (
     <div>
-      <label className="text-xs mb-1 block text-specialBlue-500 dark:text-specialGreen-500">{label}</label>
+      <label className="text-xs text-gray-600 dark:text-gray-300">{label}</label>
       <Input
         type={type}
-        value={value}
+        value={value || ""}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-white dark:bg-dark-600 border-specialBlue-200 dark:border-specialGreen-700 focus-visible:ring-2 focus-visible:ring-specialGreen-500 dark:focus-visible:ring-specialBlue-500"
+        className="
+          mt-1 rounded-xl
+          bg-white dark:bg-slate-800
+          border-gray-300 dark:border-cyan-800
+          focus-visible:ring-2 focus-visible:ring-teal-500
+          dark:focus-visible:ring-cyan-500
+          hover:border-teal-400 dark:hover:border-cyan-400
+        "
       />
     </div>
   );
