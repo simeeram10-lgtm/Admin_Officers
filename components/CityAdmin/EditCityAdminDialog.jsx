@@ -30,38 +30,41 @@ export default function EditCityAdminDialog({ isOpen, cityAdmin, onClose, onUpda
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl p-0 rounded-3xl h-[80vh] flex flex-col overflow-hidden border border-specialBlue-500 bg-gradient-to-b from-white to-specialBlue-100 dark:from-dark-400 dark:to-dark-700 shadow-[0_40px_120px_rgba(0,0,0,0.18)] [&>button]:hidden">
-        <DialogDescription>
-          Edit the details for this city admin.
-        </DialogDescription>
+      <DialogContent
+        className="
+        max-w-3xl p-0
+        rounded-3xl
+        h-[90vh] flex flex-col overflow-hidden
+        bg-gradient-to-b from-white via-gray-50 to-gray-100
+        dark:from-slate-900 dark:via-slate-900 dark:to-slate-950
+        border border-gray-200 dark:border-cyan-900
+        shadow-[0_50px_150px_rgba(0,0,0,0.35)]
+        [&>button]:hidden
+      "
+      >
         {/* TOP BAR */}
-        <div className="h-1.5 bg-gradient-to-r from-specialGreen-500 via-specialBlue-500 to-specialRed-500" />
+        <div className="h-1.5 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
         {/* HEADER */}
-        <DialogHeader className="px-6 pt-5 pb-4 border-b border-specialBlue-500">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-specialBlue-500 to-specialGreen-500 shadow-lg">
-                <Shield className="text-white w-5 h-5" />
-              </div>
-              <div>
-                <DialogTitle className="text-lg font-bold text-gray-900 dark:text-white">
-                  Edit City Admin
-                </DialogTitle>
-                <p className="text-xs text-specialBlue-500 dark:text-specialGreen-500">
-                  Update city admin information
-                </p>
-              </div>
+        <DialogHeader className="px-6 py-5 border-b border-gray-200 dark:border-cyan-900">
+          <div className="flex justify-between items-center">
+            <div>
+              <DialogTitle className="text-xl font-bold text-gray-900 dark:text-white">
+                Edit City Admin
+              </DialogTitle>
+              <DialogDescription className="text-sm text-teal-600 dark:text-cyan-300">
+                Update city admin information
+              </DialogDescription>
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl hover:bg-specialBlue-100 dark:hover:bg-dark-600 transition"
+              className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800"
             >
-              <X className="w-5 h-5 text-specialBlue-500" />
+              <X className="w-5 h-5 text-gray-500" />
             </button>
           </div>
         </DialogHeader>
         {/* BODY */}
-        <div className="max-h-[60vh] overflow-y-auto px-6 py-5 space-y-6">
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
           <Section title="Basic Information">
             <Grid>
               <StyledInput label="Full Name" value={formData.fullName} onChange={(v) => setFormData({ ...formData, fullName: v })} />
@@ -79,11 +82,21 @@ export default function EditCityAdminDialog({ isOpen, cityAdmin, onClose, onUpda
           </Section>
         </div>
         {/* FOOTER */}
-        <DialogFooter className="px-6 py-4 border-t border-specialBlue-500 flex justify-end gap-3 backdrop-blur bg-white/80 dark:bg-dark-400/80">
+        <DialogFooter
+          className="
+          px-6 py-4
+          border-t border-gray-200 dark:border-cyan-900
+          flex justify-end gap-3
+          backdrop-blur bg-white/80 dark:bg-slate-900/80
+        "
+        >
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} className="bg-specialBlue-500 hover:bg-specialBlue-600 text-white font-semibold px-4 py-2 rounded-lg shadow">
+          <Button
+            onClick={handleSubmit}
+            className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white hover:scale-[1.02]"
+          >
             Save Changes
           </Button>
         </DialogFooter>
@@ -94,8 +107,18 @@ export default function EditCityAdminDialog({ isOpen, cityAdmin, onClose, onUpda
 
 function Section({ title, children }) {
   return (
-    <div className="rounded-2xl p-5 bg-gradient-to-b from-white to-specialBlue-50 dark:from-dark-400/50 dark:to-dark-700/40 border border-specialBlue-500 shadow-sm">
-      <h3 className="text-sm font-semibold mb-4 text-specialBlue-500 dark:text-specialGreen-500">{title}</h3>
+    <div
+      className="
+      rounded-2xl p-5
+      bg-gradient-to-b from-white to-gray-50
+      dark:from-slate-800/50 dark:to-slate-900/40
+      border border-gray-200 dark:border-cyan-900
+      shadow-sm
+    "
+    >
+      <h3 className="text-sm font-semibold mb-4 text-gray-700 dark:text-cyan-300">
+        {title}
+      </h3>
       {children}
     </div>
   );
@@ -108,12 +131,19 @@ function Grid({ children }) {
 function StyledInput({ label, value, onChange, type = "text" }) {
   return (
     <div>
-      <label className="text-xs mb-1 block text-specialBlue-500 dark:text-specialGreen-500">{label}</label>
+      <label className="text-xs text-gray-600 dark:text-gray-300">{label}</label>
       <Input
         type={type}
-        value={value}
+        value={value || ""}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-white dark:bg-dark-600 border-specialBlue-200 dark:border-specialGreen-700 focus-visible:ring-2 focus-visible:ring-specialGreen-500 dark:focus-visible:ring-specialBlue-500"
+        className="
+          mt-1 rounded-xl
+          bg-white dark:bg-slate-800
+          border-gray-300 dark:border-cyan-800
+          focus-visible:ring-2 focus-visible:ring-teal-500
+          dark:focus-visible:ring-cyan-500
+          hover:border-teal-400 dark:hover:border-cyan-400
+        "
       />
     </div>
   );
